@@ -1,0 +1,26 @@
+.logo-site { /* Esta propriedade é para o logo do site, o controle de videogame. */
+    width: 50%;
+    height: auto;
+    margin-top: -2%;
+    margin-left: 1%;
+}
+
+nav > ul {
+    list-style: none;
+}
+
+.layout-index header {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    margin-top: -17%;
+    margin-left: -2%;
+}
+
+.layout-index h1 {
+    margin-left: -8%;
+    margin-top: 1px;
+    border-radius: 49px;
+    border: 2px solid black;
+    padding: 10px;
+}
