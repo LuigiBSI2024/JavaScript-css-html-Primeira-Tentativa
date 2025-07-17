@@ -24,3 +24,36 @@ nav > ul {
     border: 2px solid black;
     padding: 10px;
 }
+
+.rodape-index {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100px;
+    background-color: lightgray;
+    margin-top: 20px;
+    width: 58%;
+    margin-left: 40%;
+    margin-top: 7%;
+}
+
+.rodape-index a {
+    margin-right: 2%;
+}
+
+.rodape-index img {
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
+    margin-left: 30%;
+}
+
+.introducao {
+    
+}
+
+.introducao main p{
+    margin-left: 50%;
+    background-color: red;
+    margin-bottom: 90%;
+}
