@@ -31,10 +31,11 @@ nav > ul {
     align-items: center;
     height: 100px;
     background-color: lightgray;
-    margin-top: 20px;
+    margin-top: 8%;
     width: 58%;
     margin-left: 40%;
-    margin-top: 7%;
+    border-radius: 10px;
+    border: 2px solid black;
 }
 
 .rodape-index a {
@@ -49,11 +50,29 @@ nav > ul {
 }
 
 .introducao {
-    
+    margin-left: 34%;
+    margin-top: -18%;
+    width: 64%;
+    text-align: center;
 }
 
 .introducao main p{
-    margin-left: 50%;
-    background-color: red;
-    margin-bottom: 90%;
+    margin-top: -1%;
+    border: 2px solid black;
+}
+
+.iniciar-jogo {
+    display: flex;
+    justify-content: center;
+    width: 45%;
+    padding-bottom: 3%;
+    margin-top: 12%;
+}
+
+.iniciar-jogo button{
+    margin-top: 8%;
+    border-radius: 10px;
+    width: 60%;
+    font-size: 40px;
+    background-color: white;
 }

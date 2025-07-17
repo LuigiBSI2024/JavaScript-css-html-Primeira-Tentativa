@@ -14,47 +14,52 @@
 </head>
 
 <body class="fonte-principal-index">
-    
-    <div class="layout">
-        <div class="layout-index">
-            <header>
-                <nav>
-                    <ul>
-                        <li><a href="index.html"><img class="logo-site" src="images/controle.svg" alt="Controle de Videogame"></a> </li>
-                    </ul>
-                </nav>
-                <h1>Jogo das Cores</h1>
-            </header>
 
-            <div class="introducao">
-                <main>
-                
-                    <p>
-                        O jogo consiste em clicar na cor correta, clique na cor ordenada para vencer as rodadas. <br> 
-                        Clique no botão abaixo para iniciar o jogo.
-                    </p>
 
-                </main>
+    <div class="layout-index">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><img class="logo-site" src="images/controle.svg" alt="Controle de Videogame"></a> </li>
+                </ul>
+            </nav>
+            <h1>Jogo das Cores</h1>
+        </header>
 
-            </div>
-
-            <footer class="rodape-index">
-                <p>Autor: Luigi Aranha de Andrade - Aluno: BSI 2024 - Email de Contato: turbotastico@hotmail.com 
+        <div class="introducao">
+            <main>
+            
+                <p>
+                    O jogo consiste em clicar na cor correta, clique na cor ordenada para vencer as rodadas. Clique no botão abaixo para iniciar o jogo.
                 </p>
 
-                <a href="https://www.instagram.com/Inexistente" target="_blank">
-                    <img src="images/instragram.jpg" alt="Instagram">
-                </a>
-                <a href="https://www.facebook.com/Inexistente" target="_blank">
-                    <img src="images/facebook.jpg" alt="Facebook" >
-                </a>
-                    <!-- Os links do Facebook e Instagram acima são fictícios e se existem é uma coincidência.-->
-            </footer>
+                <div class="iniciar-jogo" >
+                    <button onclick="iniciarJogo()">Iniciar Jogo</button>
+                </div>
+
+            </main>
 
         </div>
-        <!--A tag div aninha o seu conteúdo interno de acordo com as regras impostas
-        pelo seletor .css, observe as tags de início e fim da div. -->
     </div>
+
+    <footer class="rodape-index">
+        <p>Autor: Luigi Aranha de Andrade - Aluno: BSI 2024 - Email de Contato: turbotastico@hotmail.com 
+        </p>
+
+        <a href="https://www.instagram.com/Inexistente" target="_blank">
+            <img src="images/instragram.jpg" alt="Instagram">
+        </a>
+        <a href="https://www.facebook.com/Inexistente" target="_blank">
+            <img src="images/facebook.jpg" alt="Facebook" >
+        </a>
+            <!-- Os links do Facebook e Instagram acima são fictícios e se existem é uma coincidência.-->
+    </footer>
+
+    <!--A tag div aninha o seu conteúdo interno de acordo com as regras impostas
+    pelo seletor .css, observe as tags de início e fim da div. -->
+
+    <script src="script.js"></script>
+
 </body>
 
 </html>
