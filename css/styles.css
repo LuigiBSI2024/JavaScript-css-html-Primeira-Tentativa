@@ -76,3 +76,12 @@ nav > ul {
     font-size: 40px;
     background-color: white;
 }
+
+.iniciar-jogo button:hover{
+    color: white;
+    background-color: black;
+}
+
+.iniciar-jogo button.ativo{ /*.ativo é uma classe que será uma classe que será manipulada pela função iniciarJogo(). */
+    background-color: aqua;
+}
