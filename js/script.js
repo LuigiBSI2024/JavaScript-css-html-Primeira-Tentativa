@@ -15,43 +15,49 @@ function jogoExecutando() {
     document.body.appendChild(container);
 
     novaRodada();
-
+    
+    
     function novaRodada() {
+        if (rodada >= 12) {
+            finalizar();
+            return;
+        }
+
         container.innerHTML = "";
 
         const titulo = document.createElement("h1");
         titulo.textContent = `Rodada ${rodada + 1}`;
         container.appendChild(titulo);
 
-        //
-        const peca1_jogo = document.createElement("div");
-        peca1_jogo.style.backgroundColor = corAleatoria();
+        const quantidadeQuadrados = 4 * (rodada + 1);
+        const clique_ordem = [];
 
-        const peca2_jogo = document.createElement("div");
-        peca2_jogo.style.backgroundColor = corAleatoria();
+        for (let i = 0; i < quantidadeQuadrados; i++) {
+            const peca = document.createElement("div");
+            peca.className = "grade-jogo";
+            peca.style.backgroundColor = corAleatoria();
+            peca.style.width = "40px";
+            peca.style.height = "40px";
+            peca.style.display = "inline-block";
+            peca.style.cursor = "pointer";
 
-        const peca3_jogo = document.createElement("div");
-        peca3_jogo.style.backgroundColor = corAleatoria();
-        
-        const peca4_jogo = document.createElement("div");
-        peca4_jogo.style.backgroundColor = corAleatoria();
-
-        let clique_ordem = (peca1_jogo, peca2_jogo, peca3_jogo, peca4_jogo);
-        let ordem_para_usuario = corAleatoria();
-
-        container.appendChild(clique_ordem);
-
-        for(let i = 0; i <= clique_ordem.lenght(); i++){
-
-            container.clique_ordem[i].onclick = () => {
-                if (clique_ordem[i].style.backgroundColor === ordem_para_usuario){
+            peca.onclick = () => {
+                if (peca.style.backgroundColor === ordem_para_usuario) {
                     const parabens = document.createElement("p");
-                    parabens.textContent = "Você venceu esta rodada";
-                    break;
+                    parabens.textContent = "Você venceu esta rodada!";
+                    container.appendChild(parabens);
                 }
             };
+
+            clique_ordem.push(peca);
+            container.appendChild(peca);
         }
-        //Modificando
+
+        const ordem_para_usuario = clique_ordem[0].style.backgroundColor;
+        const ordem = document.createElement("p");
+        ordem.textContent = `Clique na seguinte cor: \"${ordem_para_usuario}\"`;
+
+        container.appendChild(ordem);
 
         const pergunta = document.createElement("p");
         pergunta.textContent = "Você deseja finalizar o jogo?";
@@ -84,17 +90,14 @@ function jogoExecutando() {
 
     function finalizar() {
         container.remove();
-        console.log("Obrigado por jogar.");
     }
 
     function corAleatoria() {
         
-        const letras = "0123456789ABCDEF";
-        let cor = "#";
+        const cores = ["blue", "red", "pink", "gray", "yellow", "white", "brown"];
+        let cor;
 
-        for (let i = 0; i < 6; i++) {
-            cor += letras[Math.floor(Math.random() * 16)];
-        }
+        cor = cores[Math.floor(Math.random() * cores.length)];
         
         return cor;
     }
