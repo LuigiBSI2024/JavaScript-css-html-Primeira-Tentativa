@@ -16,14 +16,17 @@ function jogoExecutando() {
 
     novaRodada();
     
-    
     function novaRodada() {
-        if (rodada >= 12) {
+        if (rodada >= 12) { //O jogo em tese, nunca iria acabar se não fosse por esta restrição.
             finalizar();
             return;
         }
 
-        container.innerHTML = "";
+        container.innerHTML = ""; /*"Esvazia completamente o conteúdo HTML do elemento container, ou seja, 
+                                remove todos os elementos filhos (como <div>, <p>, <button>, etc.) que 
+                                foram inseridos anteriormente dentro do container. Evitando a 
+                                acumulação deles. 
+                                */ 
 
         const titulo = document.createElement("h1");
         titulo.textContent = `Rodada ${rodada + 1}`;
@@ -31,6 +34,7 @@ function jogoExecutando() {
 
         const quantidadeQuadrados = 4 * (rodada + 1);
         const clique_ordem = [];
+        let venceu_rodada = false; //Inicialmente será falso, não é possível ganhar se nunca jogou antes ou clicou na função anônima em: peca.onclick = () => {...}, linhas: 45 a 53.
 
         for (let i = 0; i < quantidadeQuadrados; i++) {
             const peca = document.createElement("div");
@@ -42,7 +46,9 @@ function jogoExecutando() {
             peca.style.cursor = "pointer";
 
             peca.onclick = () => {
-                if (peca.style.backgroundColor === ordem_para_usuario) {
+                if (!venceu_rodada && peca.style.backgroundColor === ordem_para_usuario) {
+                    venceu_rodada = true;
+
                     const parabens = document.createElement("p");
                     parabens.textContent = "Você venceu esta rodada!";
                     container.appendChild(parabens);
@@ -71,10 +77,7 @@ function jogoExecutando() {
         botaoSim.textContent = "Sim";
         botaoSim.style.backgroundColor = corAleatoria(); // cor aleatória no botão Sim
         
-        botaoSim.onclick = () => {
-            finalizar_jogo = true;
-            finalizar();
-        };
+        botaoSim.onclick = function () { finalizar_jogo = true; finalizar();};
 
         const botaoNao = document.createElement("button");
         botaoNao.textContent = "Não";
