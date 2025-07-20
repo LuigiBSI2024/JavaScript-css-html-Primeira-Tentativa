@@ -18,8 +18,7 @@ function jogoExecutando() {
     
     function novaRodada() {
         if (rodada >= 12) { //O jogo em tese, nunca iria acabar se não fosse por esta restrição.
-            finalizar();
-            return;
+            novoJogo(); //A função pergunta se o jogador deseja finalizar o jogo ou não?
         }
 
         container.innerHTML = ""; /*"Esvazia completamente o conteúdo HTML do elemento container, ou seja, 
@@ -61,8 +60,26 @@ function jogoExecutando() {
 
         const ordem_para_usuario = clique_ordem[0].style.backgroundColor;
         const ordem = document.createElement("p");
-        ordem.textContent = `Clique na seguinte cor: \"${ordem_para_usuario}\"`;
+        
+        ordem.textContent = `Clique na seguinte cor: \"${ordem_para_usuario}\", \n`;
 
+        //Início do temporizador
+        const temporizador_p = document.createElement("p");
+        let tempoRestante = 8;
+
+        const intervalo = setInterval(() => {
+            temporizador_p.textContent = `Você tem 8 segundos para clicar na cor correta: ${tempoRestante}s`;
+            tempoRestante--;
+
+            if (tempoRestante < 0 && venceu_rodada === true) {
+                clearInterval(intervalo);
+                temporizador_p.textContent = "Tempo esgotado! \nObrigado por jogar";
+                finalizar();
+            }
+        }, 1000);
+        //Fim do temporizador
+
+        container.appendChild(temporizador_p);
         container.appendChild(ordem);
 
         const pergunta = document.createElement("p");
@@ -77,13 +94,15 @@ function jogoExecutando() {
         botaoSim.textContent = "Sim";
         botaoSim.style.backgroundColor = corAleatoria(); // cor aleatória no botão Sim
         
-        botaoSim.onclick = function () { finalizar_jogo = true; finalizar();};
+        botaoSim.onclick = function () { finalizar_jogo = true; finalizar(); };
 
         const botaoNao = document.createElement("button");
         botaoNao.textContent = "Não";
         botaoNao.onclick = () => {
-            rodada++;
-            novaRodada();
+                if (venceu_rodada){
+                rodada++; // O jogo termina a partir da 13° rodada.
+                novaRodada();
+            }
         };
 
         botoesContainer.appendChild(botaoSim);
@@ -92,7 +111,32 @@ function jogoExecutando() {
     }
 
     function finalizar() {
-        container.remove();
+        if (finalizar){
+            container.remove();
+            return;
+        }
+    }
+
+    function novoJogo(){
+        const repetir = document.createElement("p");
+        repetir.textContent = "Deseja jogar novamente? "
+
+        const sim = document.createElement("button");
+        sim.textContent = "Sim";
+        sim.onclick = () => {
+            novaRodada();
+        }
+
+        const nao = document.createElement("button");
+        nao.textContent = "Nao";
+        nao.onclick = () =>{
+            finalizar();
+        }
+
+        container.append(repetir);
+        container.append(sim);
+        container.append(nao);
+
     }
 
     function corAleatoria() {
@@ -104,4 +148,5 @@ function jogoExecutando() {
         
         return cor;
     }
+    
 }
