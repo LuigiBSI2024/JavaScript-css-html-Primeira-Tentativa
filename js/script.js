@@ -19,10 +19,6 @@ function jogoExecutando() {
     novaRodada();
     
     function novaRodada() {
-        if (rodada >= 4) { //O jogo em tese, nunca iria acabar se não fosse por esta restrição.
-            novoJogo(); //A função pergunta se o jogador deseja finalizar o jogo ou não?
-        }
-
         container.innerHTML = ""; /*"Esvazia completamente o conteúdo HTML do elemento container, ou seja, 
                                 remove todos os elementos filhos (como <div>, <p>, <button>, etc.) que 
                                 foram inseridos anteriormente dentro do container. Evitando a 
@@ -30,7 +26,7 @@ function jogoExecutando() {
                                 */ 
 
         const titulo = document.createElement("h1");
-        titulo.textContent = `Rodada ${rodada + 1}`;
+        titulo.textContent = `Rodada ${rodada}`;
         container.appendChild(titulo);
 
         const quantidadeQuadrados = 4 * (rodada + 1);
@@ -90,7 +86,7 @@ function jogoExecutando() {
                 temporizador_p.textContent = `Você tem 8 segundos para clicar na cor correta: ${tempoRestante}s`;
                 tempoRestante--;
 
-                if (tempoRestante === 0 && venceu_r) {
+                if (tempoRestante === 0) {
                     clearInterval(intervalo_var);
                     temporizador_p.textContent = "Tempo esgotado! \nObrigado por jogar";
                     finalizar(container, interruptor);
@@ -123,6 +119,10 @@ function jogoExecutando() {
             if (venceu_rodada){
                 rodada++; // O jogo termina a partir da 13° rodada.
                 novaRodada();
+                
+                if (rodada > 4) { //O jogo em tese, nunca iria acabar se não fosse por esta restrição. Finaliza-se na 4 rodada.
+                    novoJogo(); //A função pergunta se o jogador deseja finalizar o jogo ou não?
+                }
             }
         };
 
@@ -132,13 +132,16 @@ function jogoExecutando() {
     }
 
     function novoJogo(){
-        const repetir = document.createElement("p");
-        repetir.textContent = "Deseja jogar novamente? ";
+        const repetir_pergunta = document.createElement("p");
+        repetir_pergunta.textContent = "Deseja jogar novamente? ";
+
+        const repetir = document.createElement("div");
+        repetir.className = "jogo-exibicao";
 
         const sim = document.createElement("button");
         sim.textContent = "Sim";
         sim.onclick = () => {
-            novaRodada();
+            jogoExecutando();
         }
 
         const nao = document.createElement("button");
@@ -147,10 +150,12 @@ function jogoExecutando() {
             finalizar(container, interruptor);
         }
 
-        container.append(repetir);
-        container.append(sim);
-        container.append(nao);
+        container.remove();
+        repetir.append(repetir_pergunta);
+        repetir.append(sim);
+        repetir.append(nao);
 
+        document.body.appendChild(repetir);
     }
 
     function finalizar(container, interruptor) {
