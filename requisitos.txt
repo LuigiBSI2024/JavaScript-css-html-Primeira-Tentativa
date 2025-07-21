@@ -1,0 +1,23 @@
+### 🕹️ O jogo - Desafio das cores
+
+**Regras do Jogo**
+
+- Preparação: O jogo exibi uma grade de quadrados coloridos.
+- Ao iniciar o jogo, o jogador tem um tempo para clicar na cor indicada.
+- Ao clicar em um quadrado uma nova cor é indicada e as cores do “grid” alternam, até o jogo terminar.
+- A cada acerto, a pontuação aumenta. Ao errar a pontuação diminui.
+- Veja um exemplo da jogabilidade abaixo
+
+**Restrições**
+
+1. A interação dos jogadores deve ser via tela, ou seja, não se deve utilizar o console do navegador para que seja possível jogar.
+2. O jogador deve apertar um botão “Jogar” para iniciar.
+3. Você deve definir a quantidade de cores e tamanho do “grid” do jogo. 
+4. Você deve definir a forma de calcular o aumento ou desconto da pontuação. 
+5. A cada clique a pontuação do jogador deve ser atualizada.
+6. Você deve definir os critérios do tempo no jogo.
+7. Você deve definir como o jogo termina. 
+8. Ao finalizar o jogo informe:
+    - O nome do jogador
+    - A pontuação
+    - Dê a opção para o jogador jogar novamente.
