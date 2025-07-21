@@ -86,7 +86,7 @@ function jogoExecutando() {
                 temporizador_p.textContent = `Você tem 8 segundos para clicar na cor correta: ${tempoRestante}s`;
                 tempoRestante--;
 
-                if (tempoRestante === 0) {
+                if (tempoRestante === 0 && venceu_rodada === true) {
                     clearInterval(intervalo_var);
                     temporizador_p.textContent = "Tempo esgotado! \nObrigado por jogar";
                     finalizar(container, interruptor);
@@ -119,8 +119,9 @@ function jogoExecutando() {
             if (venceu_rodada){
                 rodada++; // O jogo termina a partir da 13° rodada.
                 novaRodada();
-                
-                if (rodada > 4) { //O jogo em tese, nunca iria acabar se não fosse por esta restrição. Finaliza-se na 4 rodada.
+
+                if (rodada === 3) { //O jogo em tese, nunca iria acabar se não fosse por esta restrição.
+                    botoesContainer.remove();
                     novoJogo(); //A função pergunta se o jogador deseja finalizar o jogo ou não?
                 }
             }
@@ -132,16 +133,13 @@ function jogoExecutando() {
     }
 
     function novoJogo(){
-        const repetir_pergunta = document.createElement("p");
-        repetir_pergunta.textContent = "Deseja jogar novamente? ";
-
-        const repetir = document.createElement("div");
-        repetir.className = "jogo-exibicao";
+        const repetir = document.createElement("p");
+        repetir.textContent = "Deseja jogar novamente? ";
 
         const sim = document.createElement("button");
         sim.textContent = "Sim";
         sim.onclick = () => {
-            jogoExecutando();
+            novaRodada();
         }
 
         const nao = document.createElement("button");
@@ -150,12 +148,10 @@ function jogoExecutando() {
             finalizar(container, interruptor);
         }
 
-        container.remove();
-        repetir.append(repetir_pergunta);
-        repetir.append(sim);
-        repetir.append(nao);
+        container.append(repetir);
+        container.append(sim);
+        container.append(nao);
 
-        document.body.appendChild(repetir);
     }
 
     function finalizar(container, interruptor) {
@@ -165,7 +161,12 @@ function jogoExecutando() {
 
         fechar.onclick = () => {
             container.remove();
+            
             const fechando = document.createElement("div");
+            
+            document.body.appendChild(fechando);
+            container.className = "jogo-exibicao";
+
             return;
         }
     } 
