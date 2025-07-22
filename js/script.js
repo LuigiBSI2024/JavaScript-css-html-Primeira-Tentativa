@@ -1,5 +1,4 @@
 let interruptor = true; // Como o nome diz, serve para ser usado ocasionalmente assim como um interruptor real.
-const fechar = document.createElement("button");
 const container = document.createElement("div");
 
 function iniciarJogo(button){ //Button é o mesmo que botão em inglês.
@@ -47,7 +46,6 @@ function jogoExecutando() {
             peca.onclick = () => {
                 if (!venceu_rodada && peca.style.backgroundColor === ordem_para_usuario) {
                     venceu_rodada = true;
-
                     const parabens = document.createElement("p");
                     parabens.textContent = "Você venceu esta rodada!";
                     container.appendChild(parabens);
@@ -69,6 +67,9 @@ function jogoExecutando() {
             peca_grade.appendChild(peca)
             clique_ordem.push(peca);
             container.appendChild(peca_grade);
+
+            interruptor = false;
+
         }
 
         const ordem_para_usuario = clique_ordem[0].style.backgroundColor;
@@ -86,12 +87,23 @@ function jogoExecutando() {
                 temporizador_p.textContent = `Você tem 8 segundos para clicar na cor correta: ${tempoRestante}s`;
                 tempoRestante--;
 
-                if (tempoRestante === 0 && venceu_rodada === true) {
-                    clearInterval(intervalo_var);
+                if (interruptor === false || rodada != 4) { // Para entrar neste caso exclusivamente evitar o temporizador travar na rodada 3.
+                }
+
+                else if (tempoRestante < 0 ){
+                    clearInterval(intervalo_var); //Para evitar a acumulação de outros elementos associados a essa função.
                     temporizador_p.textContent = "Tempo esgotado! \nObrigado por jogar";
                     finalizar(container, interruptor);
                     return;
                 }
+
+                else {   //Para cair em qualquer outro caso não listado.
+                    clearInterval(intervalo_var); //Para evitar a acumulação de outros elementos associados a essa função.
+                    temporizador_p.textContent = "Tempo esgotado! \nObrigado por jogar";
+                    finalizar(container, interruptor);
+                    return;
+                }
+                
             }, 1000);
         }
         //Fim do temporizador
@@ -116,14 +128,14 @@ function jogoExecutando() {
         const botaoNao = document.createElement("button");
         botaoNao.textContent = "Não";
         botaoNao.onclick = () => {
-            if (venceu_rodada){
+            if (venceu_rodada && rodada != 3){
                 rodada++; // O jogo termina a partir da 13° rodada.
                 novaRodada();
-
-                if (rodada === 3) { //O jogo em tese, nunca iria acabar se não fosse por esta restrição.
-                    botoesContainer.remove();
-                    novoJogo(); //A função pergunta se o jogador deseja finalizar o jogo ou não?
-                }
+            }
+            else { //O jogo em tese, nunca iria acabar se não fosse por esta restrição.
+                container.innerHTML = "";
+                rodada = 1;
+                novoJogo(); //A função pergunta se o jogador deseja finalizar o jogo ou não?
             }
         };
 
@@ -133,6 +145,7 @@ function jogoExecutando() {
     }
 
     function novoJogo(){
+        container.innerHTML = "";
         const repetir = document.createElement("p");
         repetir.textContent = "Deseja jogar novamente? ";
 
@@ -155,7 +168,7 @@ function jogoExecutando() {
     }
 
     function finalizar(container, interruptor) {
-        console.log("Interruptor é recebido: ", interruptor);
+        const fechar = document.createElement("button");
         fechar.textContent = "Fechar";
         container.append(fechar);
 
@@ -166,8 +179,6 @@ function jogoExecutando() {
             
             document.body.appendChild(fechando);
             container.className = "jogo-exibicao";
-
-            return;
         }
     } 
 
