@@ -54,12 +54,18 @@ function jogoExecutando() {
             };  
 
             let onmouseover = true; //Variável para controlar o elemento DOM, o nome da variável é o mesmo que do elemento.
+
             if (onmouseover === true){
+
                 //.onmouseover é uma propriedade DOM equivalente ao hover (a pseudoclasse)
+
                 peca_grade.onmouseover = () =>{ //A variável será usada aqui.
                     if(onmouseover === true){
                         onmouseover = false; //Alterando o valor da variável aqui dentro.
                         intervalo();
+                        container.appendChild(ordem); //Isso aqui garante que esse elementos só é adicionados ao passarem o mouse por cima da div "peca_grade".
+                        container.appendChild(pergunta); //Isso aqui garante que esse elementos só é adicionados ao passarem o mouse por cima da div "peca_grade".
+                        container.appendChild(botoesContainer); //Isso aqui garante que esse elementos só é adicionados ao passarem o mouse por cima da div "peca_grade".
                     }
                 };
             }
@@ -87,20 +93,15 @@ function jogoExecutando() {
                 temporizador_p.textContent = `Você tem 8 segundos para clicar na cor correta: ${tempoRestante}s`;
                 tempoRestante--;
 
-                if (interruptor === false || rodada != 4) { // Para entrar neste caso exclusivamente evitar o temporizador travar na rodada 3.
-                }
-
-                else if (tempoRestante < 0 ){
-                    clearInterval(intervalo_var); //Para evitar a acumulação de outros elementos associados a essa função.
-                    temporizador_p.textContent = "Tempo esgotado! \nObrigado por jogar";
-                    finalizar(container, interruptor);
-                    return;
+                console.log("Oi");
+                if (tempoRestante > 0 && rodada != 4) { // Para entrar neste caso exclusivamente evitar o temporizador travar na rodada 3.
+                    console.log("Testanto temporizador");
                 }
 
                 else {   //Para cair em qualquer outro caso não listado.
                     clearInterval(intervalo_var); //Para evitar a acumulação de outros elementos associados a essa função.
                     temporizador_p.textContent = "Tempo esgotado! \nObrigado por jogar";
-                    finalizar(container, interruptor);
+                    
                     return;
                 }
                 
@@ -109,11 +110,9 @@ function jogoExecutando() {
         //Fim do temporizador
 
         container.appendChild(temporizador_p);
-        container.appendChild(ordem);
 
         const pergunta = document.createElement("p");
         pergunta.textContent = "Você deseja finalizar o jogo?";
-        container.appendChild(pergunta);
 
         const botoesContainer = document.createElement("div");
         botoesContainer.style.display = "flex";
@@ -123,7 +122,10 @@ function jogoExecutando() {
         botaoSim.textContent = "Sim";
         botaoSim.style.backgroundColor = corAleatoria(); // cor aleatória no botão Sim
         
-        botaoSim.onclick = function () { finalizar(container, interruptor); };
+        botaoSim.onclick = function () { 
+            finalizar(container, interruptor);
+            botoesContainer.innerHTML = "";  //Ele substitui o que antes havia nessa div por uma string vazia.
+        };
 
         const botaoNao = document.createElement("button");
         botaoNao.textContent = "Não";
@@ -141,7 +143,6 @@ function jogoExecutando() {
 
         botoesContainer.appendChild(botaoSim);
         botoesContainer.appendChild(botaoNao);
-        container.appendChild(botoesContainer);
     }
 
     function novoJogo(){
