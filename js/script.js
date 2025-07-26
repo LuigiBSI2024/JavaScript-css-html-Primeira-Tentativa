@@ -44,7 +44,7 @@ function jogoExecutando() {
             peca.style.cursor = "pointer";
 
             peca.onclick = () => {
-                if (!venceu_rodada && peca.style.backgroundColor === ordem_para_usuario) {
+                if (!venceu_rodada && cor_traducao[clique_ordem[0].style.backgroundColor] === ordem_para_usuario) {
                     venceu_rodada = true;
                     const parabens = document.createElement("p");
                     parabens.textContent = "Você venceu esta rodada!";
@@ -78,7 +78,7 @@ function jogoExecutando() {
 
         }
 
-        const ordem_para_usuario = clique_ordem[0].style.backgroundColor;
+        const ordem_para_usuario = cor_traducao[clique_ordem[0].style.backgroundColor]; //É aqui onde é atribuído a cor a ser informada para o jogador clicar.
         const ordem = document.createElement("p");
         
         ordem.textContent = `Clique na seguinte cor: \"${ordem_para_usuario}\", \n`;
@@ -195,6 +195,16 @@ function jogoExecutando() {
     }
     
 }
+
+const cor_traducao = {
+    "blue":"azul",
+    "red": "vermelho",
+    "pink": "rosa",
+    "gray": "cinza",
+    "yellow": "amarelo",
+    "white": "branco",
+    "brown": "marrom"
+};
 
 
 
