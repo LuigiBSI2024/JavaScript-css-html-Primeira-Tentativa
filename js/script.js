@@ -17,6 +17,8 @@ function jogoExecutando() {
 
     novaRodada();
     
+    let venceu_rodada = true; //Inicialmente será vazio, não é possível ganhar se nunca jogou antes ou clicou na função anônima em: peca.onclick = () => {...}, linhas: 45 a 53.
+
     function novaRodada() {
         container.innerHTML = ""; /*"Esvazia completamente o conteúdo HTML do elemento container, ou seja, 
                                 remove todos os elementos filhos (como <div>, <p>, <button>, etc.) que 
@@ -28,7 +30,6 @@ function jogoExecutando() {
         titulo.textContent = `Rodada ${rodada}`;
         container.appendChild(titulo);
 
-        let venceu_rodada; //Inicialmente será vazio, não é possível ganhar se nunca jogou antes ou clicou na função anônima em: peca.onclick = () => {...}, linhas: 45 a 53.
         const pontuacao = document.createElement("p"); //Declarando o espaço onde o returna da função de pontuação será inserido.
 
         const quantidadeQuadrados = 4 * (rodada + 1);
@@ -47,7 +48,7 @@ function jogoExecutando() {
             peca.style.cursor = "pointer";
 
             peca.onclick = () => {
-                if (!venceu_rodada && cor_traducao[item_sorteado] === ordem_para_usuario) {
+                if (venceu_rodada === true && cor_traducao[item_sorteado] === ordem_para_usuario) {
                     venceu_rodada = true;
                     const parabens = document.createElement("p");
                     parabens.textContent = "Você venceu esta rodada!";
@@ -64,16 +65,19 @@ function jogoExecutando() {
                         novoJogo(); //A função pergunta se o jogador deseja finalizar o jogo ou não.
                     }
 
-                    return pontuacao.textContent = `Pontos: ${pontosRodada(rodada, venceu_rodada)}`;
+                    pontuacao.textContent = `Pontos: ${pontosRodada(rodada, venceu_rodada)}`;
                 }
 
                 else {
-                    venceu_rodada = false;
-                    return pontuacao.textContent = `Pontos: ${pontosRodada(rodada, venceu_rodada)}`;;
+                    
+                    setTimeout(() => { // Declarando uma função anônima dentro do setTimeout, ela durará 12 segundos(=12000, por causa de 8 segundos de espera do temporizador +4 deste) antes de finalizar.
+                        
+                        pontuacao.textContent = `Pontos: ${pontosRodada(rodada, venceu_rodada)}`;
+                        finalizar(container, interruptor);
+
+                    }, 16000);
                 }
             };  
-
-            console.log(pontosRodada(rodada, venceu_rodada));
             
             let onmouseover = true; //Variável para controlar o elemento DOM, o nome da variável é o mesmo que do elemento. Criei ela para evitar várias chamadas do mesmo evento.
 
@@ -85,12 +89,6 @@ function jogoExecutando() {
                     if(onmouseover === true){
                         onmouseover = false; //Alterando o valor da variável aqui dentro.
                         intervalo();
-
-                        setTimeout(() => { // Declarando uma função anônima dentro do setTimeout, ela durará 12 segundos(=12000, por causa de 8 segundos de espera do temporizador +4 deste) antes de finalizar.
-                            if(venceu_rodada === false){
-                                finalizar(container, interruptor);
-                            }
-                        }, 16000);
 
                         container.appendChild(ordem); //Isso aqui garante que esse elementos só é adicionados ao passarem o mouse por cima da div "peca_grade".
                         container.appendChild(pergunta); //Isso aqui garante que esse elementos só é adicionados ao passarem o mouse por cima da div "peca_grade".
@@ -127,6 +125,8 @@ function jogoExecutando() {
 
                 if (tempoRestante > 0 && rodada <= 10) { // Para entrar neste caso exclusivamente evitar o temporizador travar na rodada 3.
                     console.log("Funcionando como o esperado.");
+                    console.log(venceu_rodada);
+                    console.log(pontosRodada(rodada, venceu_rodada));
                 }
 
                 else {   //Para cair em qualquer outro caso não listado.
@@ -203,7 +203,11 @@ function jogoExecutando() {
         const descricao_fim = document.createElement("p");
         descricao_fim.textContent = "Obrigado por jogar, aperte o botão abaixo para finalizar este jogo.";
 
+        const pontuacao_final = document.createElement("p");
+        pontuacao_final.textContent = `Pontos: ${pontosRodada(container, venceu_rodada)}`;
+
         container.append(descricao_fim);
+        container.append(pontuacao_final);
         container.append(fechar);
     } 
 
@@ -242,25 +246,25 @@ let pontos = 0;
 
 const regras = [
     {
-        aplica: r => r <= 4 && r !== 1,
-        calcular: v => v ? 5 : -3
+        aplica: rodada => rodada <= 4 && rodada !== 1,
+        calcular: venceu_rodada => venceu_rodada ? 5 : -3
     },
 
     {
-        aplica: r => r >= 5 && r < 9,
-        calcular: v => v ? 8 : -5
+        aplica: rodada => rodada >= 5 && rodada < 9,
+        calcular: venceu_rodada => venceu_rodada ? 8 : -5
     },
 
     {
-        aplica: r => r >= 9 && r < 11,
-        calcular: v => v ? 11 : -10
+        aplica: rodada => rodada >= 9 && rodada < 11,
+        calcular: venceu_rodada => venceu_rodada ? 11 : -10
     }
 ];
 
     for (let regra of regras) {
         if (regra.aplica(rodada)) {
             pontos += regra.calcular(venceu_rodada);
-            break; // Encontrou a regra aplicável
+            break; // Encontrou a regra aplicável com base nas condições em aplica e calcula, as propriedades presente no array de objetos "regras", então sai ao do loop ao encontrar ou não encontrar a regra.
         }
     }
 
